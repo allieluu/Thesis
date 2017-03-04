@@ -1,0 +1,38 @@
+% -*- program: xelatex -*-
+\documentclass{article}
+\pagenumbering{arabic}
+
+\widowpenalty=9999
+\usepackage[normalem]{ulem}
+\usepackage{setspace}
+
+\usepackage{fontspec}
+\setmainfont{Crimson Text}
+
+\begin{document}
+
+\title{Machine Learning-based Genome Wide Association Studies of Rheumatoid Arthritis}
+
+\author{Allie Burton\\Advisor: Prof.\ Sandra Batista}
+
+\date{}
+\maketitle
+
+\doublespacing
+
+\section*{Introduction}
+Rheumatoid arthritis (RA) is an autoimmune disease affecting the membrane between the joints causing pain, joint damage, and eventually 
+severe disability. Although RA has been identified as a multifactorial disease (meaning that there is more than one factor causing it)
+2\cite{Alamanos2005}, this paper will specifically focus on the genetic components.
+
+To look for these genetic components, researchers perform what is known as a genome-wide association study, or GWAS, which the National Human Genome Research Institute defines as “an approach that involves rapidly scanning markers across the complete sets of DNA, or genomes, of many people to find genetic variations associated with a particular disease”\cite{NationalHumanGenomeResearchInstitute2015}. 
+
+\section*{Background}
+
+\subsection*{Related Work}
+Although there have not been any studies done to date using machine learning for GWAS of idiopathic scoliosis, there have been many studies using machine learning for other phenotypes including IgM and rheumatoid arthritis, as mentioned above, in addition to myocardial infarction, coronary artery calcification, and anti-cyclic citrullinated peptide[4]. These studies will provide the basis for my methodology, specifically D’Angelo et. al.’s [5] and Tang et. al.’s [6] GWASs of rheumatoid arthritis and Stassen et. al.’s GWASs of IgM. Since there are no prior machine learning-based GWASs of AIS, I plan replicate their respective methodologies as best as possible, adapting where necessary for the specifics of scoliosis and the data sets I use.
+
+\bibliographystyle{ieeetr}
+\bibliography{Thesis}
+
+\end{document}
