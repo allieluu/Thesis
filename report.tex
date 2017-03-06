@@ -67,7 +67,47 @@ themselves may not be the cause of the trait itself, so researchers often look
 at base pairs in the region to see if they are also related\cite{NatureEducat}.
 
 \section*{Methods}
-\subsection{Phase 1}
+\subsection*{Phase 1}
+The purpose of Phase 1 was to familiarize myself with using PLINK, an open-source 
+command-line ``whole genome association analysis toolset''\cite{Chang}. For this 
+phase, I used the GAW16 data set from the North American Rheumatoid Arthritis 
+Consortium. This data set contains 868 cases of rheumatoid arthritis and 1,164 controls for a total sample size of 2,062. 
+This data set came in two parts: a CSV file and a MAP file. The 
+CSV file contains 2,062 records each with the following fields:
+\begin{itemize}
+    \item{subject ID}
+    \item{Rheumatoid arthritis (RA) affection status}
+    \item{gender}
+    \item{HLA-DRB1 allele 1}
+    \item{HLA-DRB1 allele 2}
+    \item{number of shared-epitope alleles}
+    \item{existence of shared-epitope alleles}
+    \item{anti-CCP}
+    \item{rheumatoid factor IgM}
+    \item{545,080 SNP-genotype fields}
+\end{itemize}
+Of these fields the most relevant for my purposes are the RA affection status, 
+and the SNP-genotype fields. The\ .map file is a special type of file used by 
+PLINK that contains information on each of the 545,080 SNPs with these fields:
+\begin{itemize}
+    \item{SNP name}
+    \item{chromosome}
+    \item{SNP position in basepairs}
+\end{itemize}
+
+In order to ensure compatibility with PLINK, the CSV file needed to be 
+reformatted to .ped format, the standard file format for PLINK.\@ This 
+pre-processing consisted of removing the fields corresponding to HLA-DRB1 
+alleles, number of shared-epitope alleles, existence of shared-epitope alleles, 
+anti-CCP, and rheumatoid factor IgM;\@ rearranging columns 1-3; changing the 
+denotation for male and female from ``M'' and ``F'' to ``1'' and ``2''; and
+reformatting the denotation for genotypes.
+
+After pre-processing the data, I used PLINK to run a GWAS using logistic 
+regression (the traditional method) and LASSO
+
+\section*{Results}
+\subsection*{Phase 1}
 
 
 
