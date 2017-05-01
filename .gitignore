@@ -178,3 +178,12 @@ TSWLatexianTemp*
 
 # KBibTeX
 *~[0-9]*
+
+# Extra stuff
+*.xdv
+IW\ Spring\ 2016.bib
+NEU\ 202\ Extra\ Credit.bib
+draft_paper.pdf
+report.pdf
+report_ra.tex
+*.sublime-workspace

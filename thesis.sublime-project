@@ -1,0 +1,12 @@
+{
+	"folders":
+	[
+		{
+			"path": "."
+		}
+	],
+    "options": {
+        "root": "report.tex",
+        "pdf": "arburton_thesis.pdf"
+    }
+}
