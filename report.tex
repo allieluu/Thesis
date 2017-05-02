@@ -55,32 +55,25 @@ for several years until I stopped growing. Unfortunately, my curve continued to
 progress throughout puberty, and although it has stopped progressing now, I still
 have a curve of approximately 40 degrees.
 
+Naturally this sparked a personal interest in the causes of adolescent idiopathic
+scoliosis, which is why I chose to study the possibility of discovering potential 
+genetic sources of AIS via machine learning-based genome-wide association studies.
+Although I was unable to test my theories on scoliosis data due to time constraints
+and study participant privacy protections, I believe that the information presented
+here is applicable to future genome-wide association studies of AIS.
+
+\begin{figure}[H]
+    \caption{My x-ray from 2008, age 13}
+\label{Figure 1}
+    \includegraphics[height=8in]{xray.png}
+    \centering
+\end{figure}
+
+
 \chapter{Background}
 
-\section{Related Work}
-\subsection{Machine Learning-Based Genome-Wide Association Studies}
-Although there have not been any studies done to date using machine learning for
-GWAS of idiopathic scoliosis, there have been many studies using machine learning
-for other phenotypes including IgM and rheumatoid arthritis, as mentioned above,
-in addition to myocardial infarction, coronary artery calcification, and anti-cyclic
-citrullinated peptide\cite{Szymczak2016}. These studies will provide the basis
-for my methodology, specifically D’Angelo et.\ al.’s\cite{DAngelo2009} and Tang
-et.\ al.’s\cite{Tang2009} GWASs of rheumatoid arthritis and Stassen et.\ al.’s
-GWASs of IgM.
-
-\subsection{Scoliosis Genome-Wide Association Studies}
-% TODO: include at least one paragraph for each study referenced
-Previous genome-wide association studies of adolescent idiopathic scoliosis 
-have been extremely inconsistent. For example, Takahashi et.\ al.'s\cite{Takahashi2011} 
-GWAS studying approximately 1,400 Japanese females shared data on 87 of the top 
-100 single nucleotide polymorphisms (SNPs) found in Sharma et.\ al.'s\cite{Sharma2011} 
-racially diverse GWAS of 419 families, however, only one of those SNPs showed significant
-association in Takahashi et.\ al's GWAS.\ This could be due to the genetic/ethnic 
-makeup of the study participants, the potential of multifactorial inheritance, 
-certain epigenetic factors, or the complete lack of a genetic basis for AIS. 
-
 \section{Important Terminology}
-To conduct a genome-wide association study, researchers get DNA samples from two
+To conduct a genome-wide association study (GWAS), researchers get DNA samples from two
 groups of people: those with the trait in question and those without it. Using
 these samples, each person's entire genome is scanned in a machine looking for
 single-nucleotide polymorphisms. A single-nucleotide polymorphism, or SNP
@@ -98,6 +91,36 @@ the reference allele and an odds ratio with its standard error (or confidence
 intervals) along with a statistic and p-value that test whether the odds ratio
 differs from unity''\cite{Corvin2010}. A logistic regression is performed for
 each SNP, often totaling to well over 500,000 logistics regression per study.
+
+\section{Related Work}
+\subsection{Machine Learning-Based Genome-Wide Association Studies}
+Although there have not been any studies done to date using machine learning for
+GWAS of idiopathic scoliosis, there have been many studies using machine learning
+for other phenotypes including IgM and rheumatoid arthritis, as mentioned above,
+in addition to myocardial infarction, coronary artery calcification, and anti-cyclic
+citrullinated peptide\cite{Szymczak2016}. These studies will provide the inspiration
+for my methodology, specifically D’Angelo et.\ al.’s\cite{DAngelo2009} and Tang
+et.\ al.’s\cite{Tang2009} GWASs of rheumatoid arthritis and Stassen et.\ al.’s
+GWASs of IgM.
+
+\subsection{Scoliosis Genome-Wide Association Studies}
+% TODO: include at least one paragraph for each study referenced
+
+Sharma et.\ al.\ conducted the first genome-wide association study of AIS in 2011 
+on approximately 400 United States families and subsequently conducted three
+replication studies with varying numbers of participants and ethnic backgrounds.
+They found 100 SNP associations that set the baseline for later studies.
+
+Later in 2011, Takahashi et.\ al.\ conducted another GWAS of AIS, this time with
+approximately 1,400 Japanese females using 87 of Sharma et.\ al.'s top 100 SNPs.
+However, this study only found 1 of the 87 to be significant. The most significant
+SNP they found was located on chromosome 10 near a locus not seen in other studies.
+This locus, LBX1, was significant because genes in similar places in other animals,
+specifically mice and fruit flies, were connected to the dorsal spine.
+
+Later studies did not show much congruence with these or each other, although 
+SNPs close to or related to LBX1 show the most promise\cite{Zhao2015}.
+
 
 \section{Suitability of Machine Learning for Genome-Wide Association Studies}
 The data that comes from a standard GWAS is well suited for a machine learning task.
@@ -161,8 +184,32 @@ After pre-processing the data, I used PLINK to run a GWAS using logistic
 regression (the traditional method) and LASSO.\@ I used R\cite{RCoreTeam2016} to
 call PLINK and generate the visualizations of the results.
 
+\section{Phase 2: Scoliosis Data Analysis}
+We requested the genotype data from the Takahashi study in Japan in October and
+finally received it in April. Unfortunately the data was in summary format listing
+by SNP how many people had a specific genotype and whether they were case or control.
+Despite this setback, I still wanted to do some sort of analysis with the data I
+had received, even though it would not be based in machine learning.
+
+The data contained information on 605,479 SNPs, including number of case and 
+control participants and statistical information. For my analysis, I used all SNPs
+and the case and control columns corresponding to each allele and the chromosome
+number.
+
+% TODO: Find some fancy way to represent this as an equation
+Following the general theme of a genome-wide association study, for each SNP I 
+compared the proportion of case participants of each genotype with the proportion
+of control participants of each genotype, looking for significant differences in 
+percentages, which I defined as being at least two standard deviations away from
+the mean difference in percentages.
+
+To conduct this analysis, I used Python 3.6 with the packages pandas\cite{pandas}
+and NumPy\cite{numpy} for data processing and joblib to parallelize the script. I ran
+the script on Princeton's supercomputer Della.
+
+
 \chapter{Results}
-\section{Phase 1: Rheumatoid Arthritis data analysis}
+\section{Phase 1: Rheumatoid Arthritis Data Analysis}
 With the logistic regression, there was no consistency with the Tang study
 results for a number of reasons, primarily using different classification
 methods (logistic regression vs.\ random forests). There was, however, a little
@@ -170,7 +217,10 @@ consistency between the logistic regression results and the LASSO results. The
 LASSO results also shared one SNP that was in the top 10 SNPs in the Tang study.
 The SNP in common between my PLINK log regression and LASSO runs is highlighted
 in light blue, and the SNP in common between the Tang study and my LASSO run is
-highlighted in green.
+highlighted in green. Interestingly, all of the top 138 SNPs in my log regression
+were from chromosome 6, which has been linked to rheumatoid arthritis previously
+\cite{RAgene_manchester}\cite{RA_haplotypes}.
+
 
 \begin{table}[!ht]
 \centering
@@ -217,31 +267,15 @@ The highest SNP in the plot, rs2395175, is the most statistically significant.
 
 \begin{figure}[H]
     \caption{Log Regression Results}
-\label{Figure 1}
+\label{Figure 2}
     \includegraphics[width=8cm]{figure_1}
     \centering
 \end{figure}
 
 
-\section{Phase 2: Scoliosis Data Analysis}
-We requested the genotype data from the Takahashi study in Japan in October and
-finally received it in April. Unfortunately the data was in summary format listing
-by SNP how many people had a specific genotype and whether they were case or control.
-Despite this setback, I still wanted to do some sort of analysis with the data I
-had received, even though it would not be based in machine learning.
-
-% TODO: Find some fancy way to represent this as an equation
-Following the general theme of a genome-wide association study, for each SNP I 
-compared the proportion of case participants of each genotype with the proportion
-of control participants of each genotype, looking for significant differences in 
-percentages, which I defined as being at least two standard deviations away from
-the mean difference in percentages.
-
-To conduct this analysis, I used Python 3.6 with the packages pandas\cite{pandas}
-and NumPy\cite{numpy} for data processing and joblib to parallelize the script. I ran
-the script on Princeton's supercomputer Della.
-
 % TODO: insert results here
+% TODO: ERROR ANALYSIS
+
 
 \chapter{Discussion and Conclusion}
 
